@@ -47,4 +47,9 @@ public class LoginStep {
         BrowserDriver.validatingURL("https://magento.softwaretestingboard.com/");
         loginPage.validatingUserWelcomeText(expectedWelcomeMessage);
     }
+
+    @Then("I should get the error popup message")
+    public void iShouldGetTheErrorPopupMessage() {
+        loginPage.validatingInvalidPasswordPopUpBox();
+    }
 }

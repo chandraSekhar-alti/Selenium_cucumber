@@ -18,6 +18,8 @@ public class LoginPage {
     private final By userPasswordInputField = By.xpath("(//input[@id='pass'])[1]");
     private final By logInButton = By.xpath("(//span[text()='Sign In'])[1]");
     private final By userWelcomeText = By.xpath("(//span[@class='logged-in'])[1]");
+    private final By invalidPasswordDialogueBox = By.cssSelector("div[role='alert']");
+    private final By invalidPasswordErrorMessageText = By.cssSelector("div[role='alert'] > div > div");
     public void clickOnSignInButton() {
         driver.findElement(signInButton).click();
     }
@@ -35,5 +37,12 @@ public class LoginPage {
         WaitUtils.waitForElementToBeVisible(driver,userWelcomeText);
         String actualText = driver.findElement(userWelcomeText).getText();
         Assert.assertEquals("Actual text and expected text didn't match",expectedText,actualText);
+    }
+
+    public void validatingInvalidPasswordPopUpBox(){
+        driver.findElement(invalidPasswordDialogueBox).isDisplayed();
+        String actualText = driver.findElement(invalidPasswordErrorMessageText).getText();
+        String expectedText = "The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.";
+        Assert.assertEquals("expectedText and Actual text is not matched in validating the invalid password function while login",expectedText,actualText);
     }
 }
