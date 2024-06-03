@@ -13,7 +13,6 @@ public class LoginPage {
     public WebDriver driver;
 
     public LoginPage(WebDriver driver) {
-        // Initialize the driver instance here
         this.driver = driver;
     }
 

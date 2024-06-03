@@ -1,7 +1,5 @@
 package stepDefinition;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,7 +7,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import utility.PropertyLoader;
-import utility.hooks;
+import cucumberHooks.Hooks;
 
 import java.util.Properties;
 
@@ -19,7 +17,7 @@ public class LoginStep {
     Properties properties = PropertyLoader.loadProperties("configuration.properties");
     String applicationURL = properties.getProperty("appURL");
 
-    WebDriver driver = hooks.getDriver();
+    WebDriver driver = Hooks.getDriver();
     LoginPage loginPage = new LoginPage(driver);
 
 
@@ -42,7 +40,7 @@ public class LoginStep {
 
     @Then("I should be logged in with welcome message {string}")
     public void validatingHomePage(String expectedWelcomeMessage) {
-//        BrowserDriver.validatingURL("https://magento.softwaretestingboard.com/");
+        loginPage.validatingTheApplicationUrlLoad(applicationURL);
         loginPage.validatingUserWelcomeText(expectedWelcomeMessage);
     }
 

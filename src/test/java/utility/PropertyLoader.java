@@ -20,13 +20,13 @@ public class PropertyLoader {
         Properties properties = new Properties();
         try (InputStream input = PropertyLoader.class.getClassLoader().getResourceAsStream(fileName)) {
             if (input == null) {
-                logger.error("Unable to find properties file: " + fileName);
+                logger.error("Unable to find properties file: {}", fileName);
                 throw new RuntimeException("Unable to find properties file: " + fileName);
             }
             properties.load(input);
-            logger.info("Properties file " + fileName + " loaded successfully.");
+            logger.info("Properties file {} loaded successfully.", fileName);
         } catch (IOException e) {
-            logger.error("Failed to load properties from file: " + fileName, e);
+            logger.error("Failed to load properties from file: {}", fileName, e);
             throw new RuntimeException("Failed to load properties from file: " + fileName, e);
         }
         return properties;

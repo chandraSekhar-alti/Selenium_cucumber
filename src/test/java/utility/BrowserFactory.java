@@ -12,15 +12,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.Properties;
 
 public class BrowserFactory {
-    private Properties properties;
     public WebDriver driver;
-    private String browserName;
     private static final Logger logger = LogManager.getLogger(BrowserFactory.class);
 
 
     public void browserSetup(){
-        properties = PropertyLoader.loadProperties("configuration.properties");
-        browserName = properties.getProperty("browser");
+        Properties properties = PropertyLoader.loadProperties("configuration.properties");
+        String browserName = properties.getProperty("browser");
 
         logger.info("This will run before the Scenario");
 
@@ -34,7 +32,7 @@ public class BrowserFactory {
             WebDriverManager.firefoxdriver().setup();
             driver=new FirefoxDriver();
         }else{
-            logger.info("invalid browser type " + browserName);
+            logger.info("invalid browser type {}", browserName);
         }
     }
 
@@ -44,7 +42,7 @@ public class BrowserFactory {
 
     public void navigateToURL(WebDriver driver, String applicationURL){
         driver.get(applicationURL);
-        logger.info("Navigated to URL: " + applicationURL);
+        logger.info("Navigated to URL: {}", applicationURL);
     }
     public void maximizeWindow() {
         driver.manage().window().maximize();
