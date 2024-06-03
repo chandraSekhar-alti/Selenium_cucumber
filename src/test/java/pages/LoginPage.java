@@ -10,7 +10,9 @@ public class LoginPage {
     public WebDriver driver;
 
     public LoginPage() {
-        this.driver = BrowserDriver.getDriver();
+        // Initialize the driver instance here
+        BrowserDriver browserDriver = new BrowserDriver();
+        this.driver = browserDriver.setUp();
     }
 
     private final By signInButton = By.xpath("(//li[@class='authorization-link']/a)[1]");

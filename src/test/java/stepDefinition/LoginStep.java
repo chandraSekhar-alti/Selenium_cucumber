@@ -9,16 +9,20 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import utility.BrowserDriver;
+import utility.BrowserFactory;
 
 public class LoginStep {
 
     public WebDriver driver;
     private LoginPage loginPage;
+    private BrowserDriver browserDriver;
 
     @Before
     public void setUp() {
-        driver = BrowserDriver.setUp();
+        browserDriver = new BrowserDriver();
+        driver = BrowserFactory.getDriverInstance();
         loginPage = new LoginPage();
+
     }
 
     @After
@@ -28,7 +32,7 @@ public class LoginStep {
 
     @Given("I am on login page")
     public void navigateToLoginPage() {
-        BrowserDriver.launchURL();
+        browserDriver.launchURL();
     }
 
     @When("I enter {string} and {string}")

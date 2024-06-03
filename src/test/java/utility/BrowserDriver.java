@@ -7,34 +7,53 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
 public class BrowserDriver {
     private static WebDriver driver;
+    private Properties properties;
+    private String applicationURL;
 
-    private BrowserDriver() {
+    public BrowserDriver() {
         // Private constructor to prevent instantiation
     }
 
-    public static WebDriver setUp() {
-        if (driver == null) {
-            // Initialize WebDriver if not already initialized
+    public WebDriver setUp() {
+        properties = new Properties();
+        try {
+            properties.load(BrowserDriver.class.getClassLoader().getResourceAsStream("configuration.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String browser = properties.getProperty("browser");
+        if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
-            driver.manage().window().maximize();
+        } else {
+            // Handle other browsers if needed
         }
+
+        driver.manage().window().maximize();
+        System.out.println("Navigated to the application ");
         return driver;
     }
 
-    public static void launchURL() {
-        String url = "https://magento.softwaretestingboard.com/";
-        driver.get(url);
-
+    public void launchURL() {
+        properties = new Properties();
+        try {
+            properties.load(BrowserDriver.class.getClassLoader().getResourceAsStream("configuration.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        applicationURL = properties.getProperty("appURL");
+        driver.get(applicationURL);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.urlToBe(url));
-
+        wait.until(ExpectedConditions.urlToBe(applicationURL));
         String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("The URL loaded is not as expected", url, actualUrl);
+        Assert.assertEquals("The URL loaded is not as expected", applicationURL, actualUrl);
     }
 
     public static void quitDriver() {

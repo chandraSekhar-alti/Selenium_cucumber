@@ -12,7 +12,7 @@ Feature: User management
       | alex.ley@gmail.com | Alex0123* | Welcome, Alex ley! |
 
     Scenario Outline: Validating invalid password functionality
-      Given I am on login page
+#      Given I am on login page
       When I enter "<username>" and "<password>"
       And I click the login button
       Then I should get the error popup message
