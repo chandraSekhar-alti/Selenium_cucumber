@@ -8,10 +8,16 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
+import utility.PropertyLoader;
 import utility.hooks;
+
+import java.util.Properties;
 
 
 public class LoginStep {
+
+    Properties properties = PropertyLoader.loadProperties("configuration.properties");
+    String applicationURL = properties.getProperty("appURL");
 
     WebDriver driver = hooks.getDriver();
     LoginPage loginPage = new LoginPage(driver);
@@ -19,7 +25,8 @@ public class LoginStep {
 
     @Given("I am on login page")
     public void navigateToLoginPage() {
-        System.out.println("validating URL loading from the setup function");
+        loginPage.validatingTheApplicationUrlLoad(applicationURL);
+        System.out.println("application URL validation successfully!!!");
     }
 
     @When("I enter {string} and {string}")

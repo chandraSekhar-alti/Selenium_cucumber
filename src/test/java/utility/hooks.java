@@ -2,66 +2,41 @@ package utility;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.time.Duration;
+import org.openqa.selenium.WebDriver;
+
 import java.util.Properties;
 
 public class hooks {
     private static WebDriver driver;
     private Properties properties;
     private String applicationURL;
+    private static final Logger logger = LogManager.getLogger(hooks.class);
 
     @Before
-    public void setup() throws InterruptedException {
-        properties = new Properties();
-        try {
-            properties.load(hooks.class.getClassLoader().getResourceAsStream("configuration.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void setup() {
+        logger.info("Setting up before the Scenario");
+        properties = PropertyLoader.loadProperties("configuration.properties");
+        BrowserFactory browserFactory = new BrowserFactory();
 
-        System.out.println("This will run before the Scenario");
-
-        String browser = properties.getProperty("browser");
-        if (browser.equalsIgnoreCase("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        } else if (browser.equalsIgnoreCase("edge")) {
-            WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver=new FirefoxDriver();
-        }
-
+        browserFactory.browserSetup();
+        driver = browserFactory.getDriver();
         applicationURL = properties.getProperty("appURL");
-        driver.get(applicationURL);
-        Thread.sleep(3000);
-        driver.manage().window().maximize();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.urlToBe(applicationURL));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("The URL loaded is not as expected", applicationURL, actualUrl);
-
+        browserFactory.navigateToURL(driver,applicationURL);
+        browserFactory.maximizeWindow();
+        logger.info("Browser launched and navigated to URL: " + applicationURL);
     }
 
     @After
-    public void tearDown(){
-        System.out.println("This will run after the Scenario");
+    public void tearDown() {
+        logger.info("Tearing down after the Scenario");
         if (driver != null) {
             driver.quit();
             driver = null;
+            logger.info("Browser closed");
         }
     }
 

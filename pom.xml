@@ -103,6 +103,18 @@
             <version>24.1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -114,6 +126,14 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>log4j2.xml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <!-- Copy AspectJ weaver JAR file to a specific location -->
             <plugin>
@@ -153,6 +173,8 @@
                     <includes>
                         <include>**/TestRunner.java</include>
                     </includes>
+
+
                 </configuration>
             </plugin>
         </plugins>

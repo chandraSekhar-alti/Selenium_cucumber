@@ -3,7 +3,11 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utility.WaitUtils;
+
+import java.time.Duration;
 
 public class LoginPage {
     public WebDriver driver;
@@ -44,5 +48,12 @@ public class LoginPage {
         String actualText = driver.findElement(invalidPasswordErrorMessageText).getText();
         String expectedText = "The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.";
         Assert.assertEquals("expectedText and Actual text is not matched in validating the invalid password function while login",expectedText,actualText);
+    }
+
+    public void validatingTheApplicationUrlLoad(String appURL){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.urlToBe(appURL));
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals("The URL loaded is not as expected", appURL, actualUrl);
     }
 }
