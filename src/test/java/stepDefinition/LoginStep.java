@@ -8,27 +8,18 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
-import utility.BrowserDriver;
+import utility.hooks;
+
 
 public class LoginStep {
 
-    public WebDriver driver;
-    private LoginPage loginPage;
+    WebDriver driver = hooks.getDriver();
+    LoginPage loginPage = new LoginPage(driver);
 
-    @Before
-    public void setUp() {
-        driver = BrowserDriver.setUp();
-        loginPage = new LoginPage();
-    }
-
-    @After
-    public void tearDown() {
-        BrowserDriver.quitDriver();
-    }
 
     @Given("I am on login page")
     public void navigateToLoginPage() {
-        BrowserDriver.launchURL();
+        System.out.println("validating URL loading from the setup function");
     }
 
     @When("I enter {string} and {string}")
@@ -44,7 +35,7 @@ public class LoginStep {
 
     @Then("I should be logged in with welcome message {string}")
     public void validatingHomePage(String expectedWelcomeMessage) {
-        BrowserDriver.validatingURL("https://magento.softwaretestingboard.com/");
+//        BrowserDriver.validatingURL("https://magento.softwaretestingboard.com/");
         loginPage.validatingUserWelcomeText(expectedWelcomeMessage);
     }
 

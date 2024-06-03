@@ -3,14 +3,14 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utility.BrowserDriver;
 import utility.WaitUtils;
 
 public class LoginPage {
     public WebDriver driver;
 
-    public LoginPage() {
-        this.driver = BrowserDriver.getDriver();
+    public LoginPage(WebDriver driver) {
+        // Initialize the driver instance here
+        this.driver = driver;
     }
 
     private final By signInButton = By.xpath("(//li[@class='authorization-link']/a)[1]");
