@@ -23,6 +23,13 @@ public class LoginPage {
     private final By userWelcomeText = By.xpath("(//span[@class='logged-in'])[1]");
     private final By invalidPasswordDialogueBox = By.cssSelector("div[role='alert']");
     private final By invalidPasswordErrorMessageText = By.cssSelector("div[role='alert'] > div > div");
+    private final By invalidEmailErrorMessageText = By.xpath("//div[@role='alert']/div/div");
+    private final By invalidEmailErrorMsgDialogueBox = By.cssSelector("div[role='alert'] > div");
+    private final By emailErrorMessage = By.xpath("//div[@id='email-error']");
+    private final By passwordErrorMessage = By.xpath("//div[@id='pass-error']");
+
+
+
     public void clickOnSignInButton() {
         driver.findElement(signInButton).click();
     }
@@ -54,5 +61,25 @@ public class LoginPage {
         wait.until(ExpectedConditions.urlToBe(appURL));
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals("The URL loaded is not as expected", appURL, actualUrl);
+    }
+
+    public void validatingInvalidEmailPopupBox(){
+        driver.findElement(invalidEmailErrorMsgDialogueBox).isDisplayed();
+        String actualText = driver.findElement(invalidEmailErrorMessageText).getText();
+        String expectedText = "The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.";
+        Assert.assertEquals("Expected text and ActualText didn't matched ",expectedText,actualText);
+    }
+
+    public void validatingEmailErrorMsgWhileEnteringNumbers(String expectedText){
+        driver.findElement(emailErrorMessage).isDisplayed();
+        String actualText = driver.findElement(emailErrorMessage).getText();
+        Assert.assertEquals("Expected text and ActualText didn't matched While validating the email error", expectedText, actualText);
+    }
+
+    public void validatingPopMsgWhileEnteringNullValues(String expectedErrorMsg){
+        String actualEmailText = driver.findElement(emailErrorMessage).getText();
+        Assert.assertEquals("ActualText and Expected text didn't matched while passing the empty values in the Email input field",actualEmailText, expectedErrorMsg);
+        String actualPasswordText = driver.findElement(passwordErrorMessage).getText();
+        Assert.assertEquals("ActualText and Expected text didn't matched while passing the empty values in the password input field",actualPasswordText,expectedErrorMsg);
     }
 }
