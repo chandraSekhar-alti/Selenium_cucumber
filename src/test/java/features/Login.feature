@@ -1,4 +1,4 @@
-Feature: User management
+Feature: Login page
 
   Scenario Outline: Validating the login functionality
     Given I am on login page
