@@ -39,6 +39,7 @@ Feature: Login page
 
   Scenario Outline: validating the error message for empty login details
     Given I am on login page
+    When I click on the create an account button
     When I enter invalid "<username>" and valid "<password>"
     And I click the login button
     Then I should get an error popup message saying "This is a required field."

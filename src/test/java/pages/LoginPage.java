@@ -27,6 +27,7 @@ public class LoginPage {
     private final By invalidEmailErrorMsgDialogueBox = By.cssSelector("div[role='alert'] > div");
     private final By emailErrorMessage = By.xpath("//div[@id='email-error']");
     private final By passwordErrorMessage = By.xpath("//div[@id='pass-error']");
+    public final By createAccountButton = By.xpath("(//a[text()='Create an Account'])[1]");
 
 
 
@@ -56,11 +57,11 @@ public class LoginPage {
         Assert.assertEquals("expectedText and Actual text is not matched in validating the invalid password function while login",expectedText,actualText);
     }
 
-    public void validatingTheApplicationUrlLoad(String appURL){
+    public void validatingTheApplicationUrlLoad(String expectedAppURL){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.urlToBe(appURL));
+        wait.until(ExpectedConditions.urlToBe(expectedAppURL));
         String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("The URL loaded is not as expected", appURL, actualUrl);
+        Assert.assertEquals("The URL loaded is not as expected", expectedAppURL, actualUrl);
     }
 
     public void validatingInvalidEmailPopupBox(){

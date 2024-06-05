@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/java/features",
-        glue = {"utility","stepDefinition", "cucumberHooks"},
+        glue = {"utility","stepDefinition", "cucumberHooks","features"},
         plugin = {"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}
 //        monochrome = true
 )
