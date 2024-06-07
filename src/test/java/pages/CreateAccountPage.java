@@ -15,11 +15,6 @@ public class CreateAccountPage {
     private static final Logger logger = LogManager.getLogger(CreateAccountPage.class);
     private final Faker faker;
 
-    // Form data values
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String password;
     ArrayList<String> userDetails = new ArrayList<>();
 
     public CreateAccountPage(WebDriver driver){
