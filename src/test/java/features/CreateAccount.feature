@@ -1,4 +1,5 @@
 Feature: Create new user to the application
+  @Smoke
   Scenario: Creating a new user
     Given I am on login page
     When I click on the create an account button

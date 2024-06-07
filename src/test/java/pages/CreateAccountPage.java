@@ -69,13 +69,14 @@ public class CreateAccountPage {
     }
 
 
-    private ArrayList<String> getUserDetails(){
-        userDetails.add(faker.name().firstName());
-        userDetails.add(faker.name().lastName());
-        userDetails.add(faker.internet().emailAddress());
-        userDetails.add(faker.internet().password(10,15,true,true));
-        logger.info("userDetails are :- {}",userDetails);
+    public ArrayList<String> getUserDetails(){
+        if (userDetails.isEmpty()){
+            userDetails.add(faker.name().firstName());
+            userDetails.add(faker.name().lastName());
+            userDetails.add(faker.internet().emailAddress());
+            userDetails.add(faker.internet().password(10,15,true,true));
+            logger.info("userDetails are :- {}",userDetails);
+        }
         return userDetails;
     }
-
 }

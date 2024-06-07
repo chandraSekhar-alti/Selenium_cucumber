@@ -43,6 +43,6 @@ public class CreateAccountStep {
 
     @Then("I should be registered as a new user")
     public void iShouldBeRegisteredAsANewUser() {
-        loginPage.validatingUserWelcomeText("Welcome, "+createAccountPage.firstName+" "+createAccountPage.lastName+"!");
+        loginPage.validatingUserWelcomeText("Welcome, "+createAccountPage.getUserDetails().get(0)+" "+createAccountPage.getUserDetails().get(1)+"!");
     }
 }
