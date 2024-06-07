@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+
 
 public class CreateAccountPage {
     public WebDriver driver;
@@ -18,7 +20,7 @@ public class CreateAccountPage {
     public String lastName;
     public String email;
     public String password;
-
+    ArrayList<String> userDetails = new ArrayList<>();
 
     public CreateAccountPage(WebDriver driver){
         this.driver = driver;
@@ -43,22 +45,11 @@ public class CreateAccountPage {
     }
 
     public void fillingRegistrationForm(){
-        firstName =faker.name().firstName();
-        logger.info("FirstName is :- {}",firstName);
-        enterTextIntoInputField(fireNameLocator,firstName);
-
-        lastName = faker.name().lastName();
-        logger.info("Last Name is :- {}",lastName);
-        enterTextIntoInputField(lastNameLocator,lastName);
-
-        email = faker.internet().emailAddress();
-        logger.info("Email address id :- {}",email);
-        enterTextIntoInputField(emailAddress,email);
-
-        password = faker.internet().password(10,15,true,true,true);
-        logger.info("password is :- {}",password);
-        enterTextIntoInputField(passwordInput,password);
-        enterTextIntoInputField(confirmationPasswordField,password);
+        enterTextIntoInputField(fireNameLocator,getUserDetails().get(0));
+        enterTextIntoInputField(lastNameLocator,getUserDetails().get(1));
+        enterTextIntoInputField(emailAddress,getUserDetails().get(2));
+        enterTextIntoInputField(passwordInput,getUserDetails().get(3));
+        enterTextIntoInputField(confirmationPasswordField,getUserDetails().get(3));
     }
 
 
@@ -80,6 +71,16 @@ public class CreateAccountPage {
         }catch (Exception e){
             logger.error("Error entering text into input field identified by locator {}: {}", locator, e.getMessage());
         }
+    }
+
+
+    private ArrayList<String> getUserDetails(){
+        userDetails.add(faker.name().firstName());
+        userDetails.add(faker.name().lastName());
+        userDetails.add(faker.internet().emailAddress());
+        userDetails.add(faker.internet().password(10,15,true,true));
+        logger.info("userDetails are :- {}",userDetails);
+        return userDetails;
     }
 
 }
